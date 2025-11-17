@@ -26,8 +26,8 @@ const Rooms = () => {
   const [searchParams] = useSearchParams();
   const [rooms, setRooms] = useState<Room[]>([]);
   const [searchQuery, setSearchQuery] = useState(searchParams.get("search") || "");
-  const [selectedCity, setSelectedCity] = useState("");
-  const [roomType, setRoomType] = useState("");
+  const [selectedCity, setSelectedCity] = useState("all");
+  const [roomType, setRoomType] = useState("all");
   const [maxRent, setMaxRent] = useState("");
   const [isLoading, setIsLoading] = useState(true);
 
@@ -65,10 +65,10 @@ const Rooms = () => {
       if (searchQuery) {
         query = query.or(`city.ilike.%${searchQuery}%,address.ilike.%${searchQuery}%`);
       }
-      if (selectedCity) {
+      if (selectedCity && selectedCity !== "all") {
         query = query.eq("city", selectedCity);
       }
-      if (roomType && ["single", "shared", "pg", "flat"].includes(roomType)) {
+      if (roomType && roomType !== "all" && ["single", "shared", "pg", "flat"].includes(roomType)) {
         query = query.eq("room_type", roomType as "single" | "shared" | "pg" | "flat");
       }
       if (maxRent && !isNaN(parseFloat(maxRent))) {
@@ -139,7 +139,7 @@ const Rooms = () => {
                   <SelectValue placeholder="Select City" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="">All Cities</SelectItem>
+                  <SelectItem value="all">All Cities</SelectItem>
                   <SelectItem value="Delhi">Delhi</SelectItem>
                   <SelectItem value="Mumbai">Mumbai</SelectItem>
                   <SelectItem value="Chennai">Chennai</SelectItem>
@@ -150,7 +150,7 @@ const Rooms = () => {
                   <SelectValue placeholder="Room Type" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="">All Types</SelectItem>
+                  <SelectItem value="all">All Types</SelectItem>
                   <SelectItem value="single">Single</SelectItem>
                   <SelectItem value="shared">Shared</SelectItem>
                   <SelectItem value="pg">PG</SelectItem>
