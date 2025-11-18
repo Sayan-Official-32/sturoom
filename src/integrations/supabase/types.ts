@@ -171,60 +171,96 @@ export type Database = {
         Row: {
           address: string
           amenities: string[] | null
+          average_rating: number | null
           city: string
           college_id: string | null
           created_at: string
+          deposit: number | null
           description: string | null
           distance_from_college: number | null
+          has_ac: boolean | null
+          has_attached_bathroom: boolean | null
+          has_mess: boolean | null
           id: string
           is_available: boolean
+          is_furnished: boolean | null
           latitude: number | null
           longitude: number | null
+          nearby_landmarks: string | null
           owner_id: string
+          owner_name: string | null
+          owner_phone: string | null
+          owner_whatsapp: string | null
           rent: number
+          room_rules: string | null
           room_type: Database["public"]["Enums"]["room_type"]
           status: Database["public"]["Enums"]["room_status"]
           title: string
+          total_reviews: number | null
           updated_at: string
           views_count: number
         }
         Insert: {
           address: string
           amenities?: string[] | null
+          average_rating?: number | null
           city: string
           college_id?: string | null
           created_at?: string
+          deposit?: number | null
           description?: string | null
           distance_from_college?: number | null
+          has_ac?: boolean | null
+          has_attached_bathroom?: boolean | null
+          has_mess?: boolean | null
           id?: string
           is_available?: boolean
+          is_furnished?: boolean | null
           latitude?: number | null
           longitude?: number | null
+          nearby_landmarks?: string | null
           owner_id: string
+          owner_name?: string | null
+          owner_phone?: string | null
+          owner_whatsapp?: string | null
           rent: number
+          room_rules?: string | null
           room_type: Database["public"]["Enums"]["room_type"]
           status?: Database["public"]["Enums"]["room_status"]
           title: string
+          total_reviews?: number | null
           updated_at?: string
           views_count?: number
         }
         Update: {
           address?: string
           amenities?: string[] | null
+          average_rating?: number | null
           city?: string
           college_id?: string | null
           created_at?: string
+          deposit?: number | null
           description?: string | null
           distance_from_college?: number | null
+          has_ac?: boolean | null
+          has_attached_bathroom?: boolean | null
+          has_mess?: boolean | null
           id?: string
           is_available?: boolean
+          is_furnished?: boolean | null
           latitude?: number | null
           longitude?: number | null
+          nearby_landmarks?: string | null
           owner_id?: string
+          owner_name?: string | null
+          owner_phone?: string | null
+          owner_whatsapp?: string | null
           rent?: number
+          room_rules?: string | null
           room_type?: Database["public"]["Enums"]["room_type"]
           status?: Database["public"]["Enums"]["room_status"]
           title?: string
+          total_reviews?: number | null
           updated_at?: string
           views_count?: number
         }
