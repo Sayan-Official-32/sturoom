@@ -5,6 +5,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 
 const Contact = () => {
   const navigate = useNavigate();
@@ -70,11 +71,8 @@ const Contact = () => {
         </div>
       </div>
 
-      <footer className="border-t border-border py-8 mt-20">
-        <div className="container mx-auto px-4 text-center text-muted-foreground">
-          <p>&copy; 2025 StuName. All rights reserved.</p>
-        </div>
-      </footer>
+      {/* Footer */}
+      <Footer />
     </div>
   );
 };

@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import { ArrowLeft, Users, Target, Heart, Home, Download } from "lucide-react";
 import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 
 const About = () => {
   const navigate = useNavigate();
@@ -13,15 +14,6 @@ const About = () => {
 
       {/* About Content */}
       <div className="container mx-auto px-4 py-20">
-        <Button 
-          variant="ghost" 
-          onClick={() => navigate("/")}
-          className="mb-8 hover-scale"
-        >
-          <ArrowLeft className="mr-2" />
-          Back to Home
-        </Button>
-
         <div className="max-w-4xl mx-auto">
           <h1 className="text-5xl font-bold text-foreground mb-6 animate-fade-in">
             About <span className="text-primary">StuName</span>
@@ -74,12 +66,7 @@ const About = () => {
       </div>
 
       {/* Footer */}
-      <footer className="border-t border-border py-8 mt-20">
-        <div className="container mx-auto px-4 text-center text-muted-foreground">
-          <p>&copy; 2025 StuName. All rights reserved.</p>
-          <p className="mt-2">Connecting students with affordable rooms, without brokers.</p>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 };

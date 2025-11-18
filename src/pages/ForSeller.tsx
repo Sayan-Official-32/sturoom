@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Home, Upload, Users, TrendingUp, Zap } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 
 const ForSeller = () => {
   const navigate = useNavigate();
@@ -52,11 +53,8 @@ const ForSeller = () => {
         </div>
       </div>
 
-      <footer className="border-t border-border py-8 mt-20">
-        <div className="container mx-auto px-4 text-center text-muted-foreground">
-          <p>&copy; 2025 StuName. All rights reserved.</p>
-        </div>
-      </footer>
+      {/* Footer */}
+      <Footer />
     </div>
   );
 };
