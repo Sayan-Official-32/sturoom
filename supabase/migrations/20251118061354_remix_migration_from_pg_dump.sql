@@ -59,6 +59,35 @@ CREATE TYPE public.user_role AS ENUM (
 
 
 --
+-- Name: assign_user_role(); Type: FUNCTION; Schema: public; Owner: -
+--
+
+CREATE FUNCTION public.assign_user_role() RETURNS trigger
+    LANGUAGE plpgsql SECURITY DEFINER
+    SET search_path TO 'public'
+    AS $$
+DECLARE
+  signup_role user_role;
+BEGIN
+  -- Get the role from user metadata (set during signup)
+  signup_role := COALESCE(NEW.raw_user_meta_data->>'signup_role', 'student')::user_role;
+  
+  -- Only allow 'student' or 'owner' roles during signup
+  -- Admin roles can only be assigned manually by existing admins
+  IF signup_role NOT IN ('student', 'owner') THEN
+    signup_role := 'student';
+  END IF;
+  
+  -- Insert the validated role
+  INSERT INTO public.user_roles (user_id, role)
+  VALUES (NEW.id, signup_role);
+  
+  RETURN NEW;
+END;
+$$;
+
+
+--
 -- Name: handle_new_user(); Type: FUNCTION; Schema: public; Owner: -
 --
 
@@ -202,7 +231,19 @@ CREATE TABLE public.rooms (
     status public.room_status DEFAULT 'pending'::public.room_status NOT NULL,
     views_count integer DEFAULT 0 NOT NULL,
     created_at timestamp with time zone DEFAULT now() NOT NULL,
-    updated_at timestamp with time zone DEFAULT now() NOT NULL
+    updated_at timestamp with time zone DEFAULT now() NOT NULL,
+    deposit numeric,
+    owner_name text,
+    owner_phone text,
+    owner_whatsapp text,
+    nearby_landmarks text,
+    room_rules text,
+    has_attached_bathroom boolean DEFAULT false,
+    is_furnished boolean DEFAULT false,
+    has_ac boolean DEFAULT false,
+    has_mess boolean DEFAULT false,
+    average_rating numeric DEFAULT 0,
+    total_reviews integer DEFAULT 0
 );
 
 
@@ -419,6 +460,13 @@ CREATE POLICY "Anyone can view room images" ON public.room_images FOR SELECT TO 
 
 
 --
+-- Name: user_roles Only admins can assign roles; Type: POLICY; Schema: public; Owner: -
+--
+
+CREATE POLICY "Only admins can assign roles" ON public.user_roles FOR INSERT WITH CHECK (public.has_role(auth.uid(), 'admin'::public.user_role));
+
+
+--
 -- Name: rooms Owners can insert rooms; Type: POLICY; Schema: public; Owner: -
 --
 
@@ -481,13 +529,6 @@ CREATE POLICY "Students can view their bookmarks" ON public.bookmarks FOR SELECT
 --
 
 CREATE POLICY "Users can insert their own profile" ON public.profiles FOR INSERT TO authenticated WITH CHECK ((auth.uid() = id));
-
-
---
--- Name: user_roles Users can insert their own roles; Type: POLICY; Schema: public; Owner: -
---
-
-CREATE POLICY "Users can insert their own roles" ON public.user_roles FOR INSERT TO authenticated WITH CHECK ((auth.uid() = user_id));
 
 
 --
