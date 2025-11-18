@@ -1,43 +1,15 @@
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
-import { ArrowLeft, Users, Target, Heart } from "lucide-react";
+import { ArrowLeft, Users, Target, Heart, Home, Download } from "lucide-react";
+import Navbar from "@/components/Navbar";
 
 const About = () => {
   const navigate = useNavigate();
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-accent/50 to-background">
-      {/* Same Navbar as Index - Copy from Index.tsx */}
-      <nav className="sticky top-0 z-50 bg-background/80 backdrop-blur-md border-b border-border">
-        <div className="container mx-auto px-4 py-4">
-          <div className="relative flex items-center">
-            <div className="flex-1">
-              <h1 
-                className="text-2xl font-bold text-primary hover-scale cursor-pointer"
-                onClick={() => navigate("/")}
-              >
-                StuName
-              </h1>
-            </div>
-            <div className="absolute left-1/2 -translate-x-1/2 flex items-center gap-2">
-              <Button variant="ghost" onClick={() => navigate("/")} className="hover-scale">
-                Home
-              </Button>
-              <Button variant="ghost" onClick={() => navigate("/about")} className="hover-scale">
-                About Us
-              </Button>
-            </div>
-            <div className="flex-1 flex items-center justify-end gap-3">
-              <Button variant="outline" onClick={() => navigate("/student-auth")} className="hover-scale">
-                Student Login
-              </Button>
-              <Button onClick={() => navigate("/owner-auth")} className="hover-scale">
-                Owner Login
-              </Button>
-            </div>
-          </div>
-        </div>
-      </nav>
+      {/* Navbar */}
+      <Navbar />
 
       {/* About Content */}
       <div className="container mx-auto px-4 py-20">
