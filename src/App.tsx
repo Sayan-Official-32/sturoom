@@ -11,6 +11,12 @@ import EnhancedRoomDetails from "./pages/EnhancedRoomDetails";
 import UploadRoom from "./pages/UploadRoom";
 import Admin from "./pages/Admin";
 import NotFound from "./pages/NotFound";
+import About from "./pages/About";
+import ForBuyer from "./pages/ForBuyer";
+import ForSeller from "./pages/ForSeller";
+import FAQ from "./pages/FAQ";
+import Contact from "./pages/Contact";
+import DownloadApp from "./pages/DownloadApp";
 
 const queryClient = new QueryClient();
 
@@ -28,6 +34,13 @@ const App = () => (
           <Route path="/room/:id" element={<EnhancedRoomDetails />} />
           <Route path="/upload-room" element={<UploadRoom />} />
           <Route path="/admin" element={<Admin />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/for-buyer" element={<ForBuyer />} />
+          <Route path="/for-seller" element={<ForSeller />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/faq" element={<FAQ />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/download-app" element={<DownloadApp />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
