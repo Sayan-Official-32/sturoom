@@ -52,17 +52,17 @@ const Index = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-accent to-background">
+    <div className="min-h-screen bg-gradient-to-b from-accent/50 to-background">
       {/* Navbar */}
       <nav className="sticky top-0 z-50 bg-background/80 backdrop-blur-md border-b border-border">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
-            <h1 className="text-2xl font-bold text-primary">StuName</h1>
+            <h1 className="text-2xl font-bold text-primary hover-scale cursor-pointer">StuName</h1>
             <div className="flex gap-3">
-              <Button variant="outline" onClick={() => navigate("/student-auth")}>
+              <Button variant="outline" onClick={() => navigate("/student-auth")} className="hover-scale">
                 Student Login
               </Button>
-              <Button onClick={() => navigate("/owner-auth")}>Owner Login</Button>
+              <Button onClick={() => navigate("/owner-auth")} className="hover-scale">Owner Login</Button>
             </div>
           </div>
         </div>
@@ -71,31 +71,33 @@ const Index = () => {
       {/* Hero Section */}
       <section className="container mx-auto px-4 py-20 animate-fade-in-up">
         <div className="text-center max-w-4xl mx-auto">
-          <h2 className="text-5xl md:text-6xl font-bold text-foreground mb-6 animate-fade-in">
+          <h2 className="text-5xl md:text-7xl font-bold text-foreground mb-6 animate-fade-in">
             Find Your Perfect Room
             <br />
-            <span className="text-primary">Near College</span>
+            <span className="text-primary bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
+              Near College
+            </span>
           </h2>
-          <p className="text-xl text-muted-foreground mb-8">
+          <p className="text-xl md:text-2xl text-muted-foreground mb-10 animate-fade-in" style={{animationDelay: '0.2s'}}>
             Connect directly with room owners. No brokers. No hidden fees. Just affordable rooms for students.
           </p>
 
           {/* Search Bar */}
-          <div className="flex gap-2 max-w-2xl mx-auto mb-4">
+          <div className="flex gap-2 max-w-2xl mx-auto mb-4 animate-scale-in" style={{animationDelay: '0.4s'}}>
             <Input
               type="text"
               placeholder="Search by college name or city..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               onKeyPress={(e) => e.key === "Enter" && handleSearch()}
-              className="h-14 text-lg"
+              className="h-14 text-lg shadow-lg"
             />
-            <Button onClick={handleSearch} size="lg" className="h-14 px-8">
+            <Button onClick={handleSearch} size="lg" className="h-14 px-8 hover-scale">
               <Search className="mr-2" />
               Search
             </Button>
           </div>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-sm text-muted-foreground animate-fade-in" style={{animationDelay: '0.6s'}}>
             Try: "IIT Delhi", "Mumbai", "AIIMS Delhi"
           </p>
         </div>
@@ -103,19 +105,19 @@ const Index = () => {
 
       {/* Features Section */}
       <section className="container mx-auto px-4 py-20">
-        <div className="text-center mb-12">
-          <h3 className="text-3xl font-bold text-foreground mb-4">Why Choose StuName?</h3>
-          <p className="text-muted-foreground">The easiest way to find student-friendly rooms</p>
+        <div className="text-center mb-12 animate-fade-in">
+          <h3 className="text-3xl md:text-4xl font-bold text-foreground mb-4">Why Choose StuName?</h3>
+          <p className="text-lg text-muted-foreground">The easiest way to find student-friendly rooms</p>
         </div>
         <div className="grid md:grid-cols-3 gap-8">
           {features.map((feature, index) => (
             <Card
               key={index}
-              className="border-2 hover:border-primary transition-all duration-300 hover:shadow-lg animate-fade-in"
+              className="border-2 hover:border-primary transition-all duration-300 hover-lift cursor-pointer animate-fade-in"
               style={{ animationDelay: `${index * 0.1}s` }}
             >
               <CardContent className="p-6 text-center">
-                <div className="w-16 h-16 bg-accent rounded-full flex items-center justify-center mx-auto mb-4">
+                <div className="w-16 h-16 bg-accent rounded-full flex items-center justify-center mx-auto mb-4 animate-scale-in" style={{ animationDelay: `${index * 0.1 + 0.2}s` }}>
                   <feature.icon className="w-8 h-8 text-primary" />
                 </div>
                 <h4 className="text-xl font-semibold mb-2">{feature.title}</h4>
@@ -128,9 +130,9 @@ const Index = () => {
 
       {/* How It Works */}
       <section className="container mx-auto px-4 py-20 bg-accent/30 rounded-3xl">
-        <div className="text-center mb-12">
-          <h3 className="text-3xl font-bold text-foreground mb-4">How It Works</h3>
-          <p className="text-muted-foreground">Find your room in 3 simple steps</p>
+        <div className="text-center mb-12 animate-fade-in">
+          <h3 className="text-3xl md:text-4xl font-bold text-foreground mb-4">How It Works</h3>
+          <p className="text-lg text-muted-foreground">Find your room in 3 simple steps</p>
         </div>
         <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
           {steps.map((step, index) => (
@@ -139,7 +141,7 @@ const Index = () => {
               className="text-center animate-fade-in"
               style={{ animationDelay: `${index * 0.15}s` }}
             >
-              <div className="w-16 h-16 bg-primary text-primary-foreground rounded-full flex items-center justify-center mx-auto mb-4 text-2xl font-bold">
+              <div className="w-20 h-20 bg-primary text-primary-foreground rounded-full flex items-center justify-center mx-auto mb-4 text-3xl font-bold shadow-lg hover-scale transition-transform">
                 {step.number}
               </div>
               <h4 className="text-xl font-semibold mb-2">{step.title}</h4>
@@ -151,17 +153,17 @@ const Index = () => {
 
       {/* CTA Section */}
       <section className="container mx-auto px-4 py-20 text-center">
-        <div className="max-w-3xl mx-auto bg-primary text-primary-foreground rounded-3xl p-12 animate-scale-in">
-          <h3 className="text-3xl font-bold mb-4">Ready to Find Your Room?</h3>
-          <p className="text-lg mb-8 opacity-90">
+        <div className="max-w-3xl mx-auto bg-gradient-to-r from-primary to-primary/80 text-primary-foreground rounded-3xl p-12 shadow-2xl animate-scale-in">
+          <h3 className="text-3xl md:text-4xl font-bold mb-4">Ready to Find Your Room?</h3>
+          <p className="text-lg md:text-xl mb-8 opacity-90">
             Join thousands of students who found their perfect accommodation
           </p>
-          <div className="flex gap-4 justify-center">
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button
               size="lg"
               variant="secondary"
               onClick={() => navigate("/student-auth")}
-              className="text-lg px-8"
+              className="text-lg px-8 hover-scale"
             >
               <Home className="mr-2" />
               I'm a Student
@@ -170,7 +172,7 @@ const Index = () => {
               size="lg"
               variant="outline"
               onClick={() => navigate("/owner-auth")}
-              className="text-lg px-8 bg-primary-foreground text-primary hover:bg-primary-foreground/90"
+              className="text-lg px-8 bg-primary-foreground text-primary hover:bg-primary-foreground/90 hover-scale"
             >
               <Zap className="mr-2" />
               I'm an Owner
@@ -180,7 +182,7 @@ const Index = () => {
       </section>
 
       {/* Footer */}
-      <footer className="border-t border-border py-8">
+      <footer className="border-t border-border py-8 mt-20">
         <div className="container mx-auto px-4 text-center text-muted-foreground">
           <p>&copy; 2025 StuName. All rights reserved.</p>
           <p className="mt-2">Connecting students with affordable rooms, without brokers.</p>
