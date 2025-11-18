@@ -32,7 +32,7 @@ const Footer = () => {
           <div className="lg:col-span-2 space-y-4">
             <div className="flex items-center gap-2">
               <Home className="h-8 w-8 text-primary" />
-              <h2 className="text-3xl font-bold text-primary">StuName</h2>
+              <h2 className="text-3xl font-bold text-primary">StuRoom</h2>
             </div>
             <p className="text-muted-foreground text-sm leading-relaxed">
               India's #1 student accommodation platform. Connecting students with verified, affordable rooms near colleges and universities. No broker fees, no hidden charges - just transparent, student-friendly housing solutions.
@@ -296,8 +296,8 @@ const Footer = () => {
             <Mail className="h-5 w-5 text-primary mt-0.5" />
             <div>
               <p className="font-semibold text-sm mb-1">Email Support</p>
-              <a href="mailto:support@stuname.com" className="text-sm text-muted-foreground hover:text-primary">
-                support@stuname.com
+              <a href="mailto:support@sturoom.com" className="text-sm text-muted-foreground hover:text-primary">
+                support@sturoom.com
               </a>
               <p className="text-xs text-muted-foreground mt-1">Response within 24 hours</p>
             </div>
@@ -356,7 +356,7 @@ const Footer = () => {
           {/* Copyright */}
           <div className="text-center">
             <p className="text-sm text-muted-foreground">
-              &copy; 2025 <span className="font-semibold text-primary">StuName</span>. All rights reserved. 
+              &copy; 2025 <span className="font-semibold text-primary">StuRoom</span>. All rights reserved. 
               <span className="mx-2">|</span>
               Made with <span className="text-red-500">❤️</span> for Students in India
             </p>

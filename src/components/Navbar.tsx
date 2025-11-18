@@ -15,7 +15,7 @@ const Navbar = () => {
               className="text-2xl font-bold text-primary hover-scale cursor-pointer"
               onClick={() => navigate("/")}
             >
-              StuName
+              StuRoom
             </h1>
           </div>
 
@@ -86,20 +86,13 @@ const Navbar = () => {
             </Button>
           </div>
 
-          {/* Right Side - Auth Buttons */}
+          {/* Right Side - Single Login Button */}
           <div className="flex-1 flex items-center justify-end gap-3">
             <Button 
-              variant="outline" 
-              onClick={() => navigate("/student-auth")} 
+              onClick={() => navigate("/auth")} 
               className="hover-scale"
             >
-              Student Login
-            </Button>
-            <Button 
-              onClick={() => navigate("/owner-auth")} 
-              className="hover-scale"
-            >
-              Owner Login
+              Login
             </Button>
           </div>
         </div>

@@ -152,7 +152,7 @@ const Index = () => {
             <Button
               size="lg"
               variant="secondary"
-              onClick={() => navigate("/student-auth")}
+              onClick={() => navigate("/auth")}
               className="text-lg px-8 hover-scale"
             >
               <Home className="mr-2" />
@@ -161,7 +161,7 @@ const Index = () => {
             <Button
               size="lg"
               variant="outline"
-              onClick={() => navigate("/owner-auth")}
+              onClick={() => navigate("/auth")}
               className="text-lg px-8 bg-primary-foreground text-primary hover:bg-primary-foreground/90 hover-scale"
             >
               <Zap className="mr-2" />
