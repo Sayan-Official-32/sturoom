@@ -114,9 +114,9 @@ const Index = () => {
           <div className="absolute bottom-20 left-20 w-96 h-96 bg-primary/5 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
         </div>
 
-        <div className="relative z-10 grid lg:grid-cols-2 gap-12 items-center">
+        <div className="relative z-10 grid lg:grid-cols-2 gap-20 items-center max-w-7xl mx-auto">
           {/* Left Content */}
-          <div className="text-center lg:text-left">
+          <div className="text-center lg:text-left lg:pr-8">
             <Badge className="mb-4 animate-fade-in" variant="secondary">
               <Sparkles className="w-3 h-3 mr-1" />
               India's #1 Student Housing Platform
@@ -176,7 +176,7 @@ const Index = () => {
           </div>
 
           {/* Right - Hero Images */}
-          <div className="relative animate-fade-in" style={{animationDelay: '0.3s'}}>
+          <div className="relative animate-fade-in lg:pl-10" style={{animationDelay: '0.3s'}}>
             <div className="relative h-[500px] rounded-3xl overflow-hidden shadow-2xl">
               {/* Main Image */}
               <img 
