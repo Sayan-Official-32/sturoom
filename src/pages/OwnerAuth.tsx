@@ -50,6 +50,7 @@ const OwnerAuth = () => {
           data: {
             full_name: fullName,
             phone: phone,
+            signup_role: "owner",
           },
         },
       });
@@ -57,12 +58,6 @@ const OwnerAuth = () => {
       if (error) throw error;
 
       if (data.user) {
-        // Add owner role
-        await supabase.from("user_roles").insert({
-          user_id: data.user.id,
-          role: "owner",
-        });
-
         toast.success("Account created! Redirecting...");
       }
     } catch (error: any) {

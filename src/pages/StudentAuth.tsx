@@ -50,6 +50,7 @@ const StudentAuth = () => {
           data: {
             full_name: fullName,
             phone: phone,
+            signup_role: "student",
           },
         },
       });
@@ -57,12 +58,6 @@ const StudentAuth = () => {
       if (error) throw error;
 
       if (data.user) {
-        // Add student role
-        await supabase.from("user_roles").insert({
-          user_id: data.user.id,
-          role: "student",
-        });
-
         toast.success("Account created! Redirecting...");
       }
     } catch (error: any) {
