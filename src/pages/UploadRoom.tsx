@@ -10,6 +10,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Checkbox } from "@/components/ui/checkbox";
 import { toast } from "sonner";
 import { ArrowLeft, Upload, Home } from "lucide-react";
+import { ImageUpload } from "@/components/ImageUpload";
 
 const UploadRoom = () => {
   const navigate = useNavigate();
@@ -18,14 +19,24 @@ const UploadRoom = () => {
     title: "",
     description: "",
     rent: "",
+    deposit: "",
     city: "",
     address: "",
     roomType: "single" as "single" | "shared" | "pg" | "flat",
     distanceFromCollege: "",
     collegeId: "",
+    ownerName: "",
+    ownerPhone: "",
+    ownerWhatsapp: "",
+    roomRules: "",
+    hasAc: false,
+    hasAttachedBathroom: false,
+    hasMess: false,
+    isFurnished: false,
   });
   const [selectedAmenities, setSelectedAmenities] = useState<string[]>([]);
   const [colleges, setColleges] = useState<any[]>([]);
+  const [images, setImages] = useState<File[]>([]);
 
   const amenitiesList = ["WiFi", "Parking", "Water 24/7", "Electricity", "Furnished", "AC", "Geyser", "Security"];
 
@@ -55,25 +66,63 @@ const UploadRoom = () => {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) throw new Error("Not authenticated");
 
-      const { data, error } = await supabase
+      // Insert room data
+      const { data: room, error: roomError } = await supabase
         .from("rooms")
         .insert({
           owner_id: user.id,
           title: formData.title,
           description: formData.description,
           rent: parseFloat(formData.rent),
+          deposit: formData.deposit ? parseFloat(formData.deposit) : null,
           city: formData.city,
           address: formData.address,
           room_type: formData.roomType,
           distance_from_college: formData.distanceFromCollege ? parseFloat(formData.distanceFromCollege) : null,
           college_id: formData.collegeId || null,
           amenities: selectedAmenities,
+          owner_name: formData.ownerName || null,
+          owner_phone: formData.ownerPhone || null,
+          owner_whatsapp: formData.ownerWhatsapp || null,
+          room_rules: formData.roomRules || null,
+          has_ac: formData.hasAc,
+          has_attached_bathroom: formData.hasAttachedBathroom,
+          has_mess: formData.hasMess,
+          is_furnished: formData.isFurnished,
           status: "pending",
         })
         .select()
         .single();
 
-      if (error) throw error;
+      if (roomError) throw roomError;
+
+      // Upload images if any
+      if (images.length > 0 && room) {
+        for (let i = 0; i < images.length; i++) {
+          const file = images[i];
+          const fileExt = file.name.split('.').pop();
+          const fileName = `${room.id}/${Date.now()}_${i}.${fileExt}`;
+
+          const { error: uploadError } = await supabase.storage
+            .from('room-images')
+            .upload(fileName, file);
+
+          if (uploadError) {
+            console.error('Image upload error:', uploadError);
+            continue;
+          }
+
+          const { data: { publicUrl } } = supabase.storage
+            .from('room-images')
+            .getPublicUrl(fileName);
+
+          await supabase.from('room_images').insert({
+            room_id: room.id,
+            image_url: publicUrl,
+            is_primary: i === 0,
+          });
+        }
+      }
 
       toast.success("Room submitted for approval!");
       navigate("/rooms");
@@ -242,6 +291,115 @@ const UploadRoom = () => {
                     </div>
                   ))}
                 </div>
+              </div>
+
+              {/* Additional Information */}
+              <div className="space-y-4 pt-4 border-t border-border">
+                <h3 className="text-lg font-semibold">Additional Information</h3>
+                
+                {/* Deposit */}
+                <div className="space-y-2">
+                  <Label htmlFor="deposit">Security Deposit (₹)</Label>
+                  <Input
+                    id="deposit"
+                    type="number"
+                    placeholder="10000"
+                    value={formData.deposit}
+                    onChange={(e) => setFormData({ ...formData, deposit: e.target.value })}
+                  />
+                </div>
+
+                {/* Room Features Checkboxes */}
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                  <div className="flex items-center space-x-2">
+                    <Checkbox
+                      id="hasAc"
+                      checked={formData.hasAc}
+                      onCheckedChange={(checked) => setFormData({ ...formData, hasAc: checked as boolean })}
+                    />
+                    <Label htmlFor="hasAc" className="cursor-pointer">Has AC</Label>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <Checkbox
+                      id="hasAttachedBathroom"
+                      checked={formData.hasAttachedBathroom}
+                      onCheckedChange={(checked) => setFormData({ ...formData, hasAttachedBathroom: checked as boolean })}
+                    />
+                    <Label htmlFor="hasAttachedBathroom" className="cursor-pointer">Attached Bathroom</Label>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <Checkbox
+                      id="hasMess"
+                      checked={formData.hasMess}
+                      onCheckedChange={(checked) => setFormData({ ...formData, hasMess: checked as boolean })}
+                    />
+                    <Label htmlFor="hasMess" className="cursor-pointer">Has Mess</Label>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <Checkbox
+                      id="isFurnished"
+                      checked={formData.isFurnished}
+                      onCheckedChange={(checked) => setFormData({ ...formData, isFurnished: checked as boolean })}
+                    />
+                    <Label htmlFor="isFurnished" className="cursor-pointer">Furnished</Label>
+                  </div>
+                </div>
+
+                {/* Room Rules */}
+                <div className="space-y-2">
+                  <Label htmlFor="roomRules">Room Rules</Label>
+                  <Textarea
+                    id="roomRules"
+                    placeholder="e.g., No smoking, No pets, Visitors allowed till 9 PM"
+                    rows={3}
+                    value={formData.roomRules}
+                    onChange={(e) => setFormData({ ...formData, roomRules: e.target.value })}
+                  />
+                </div>
+              </div>
+
+              {/* Owner Contact Information */}
+              <div className="space-y-4 pt-4 border-t border-border">
+                <h3 className="text-lg font-semibold">Owner Contact Information</h3>
+                
+                <div className="grid md:grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="ownerName">Owner Name</Label>
+                    <Input
+                      id="ownerName"
+                      placeholder="John Doe"
+                      value={formData.ownerName}
+                      onChange={(e) => setFormData({ ...formData, ownerName: e.target.value })}
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="ownerPhone">Owner Phone</Label>
+                    <Input
+                      id="ownerPhone"
+                      type="tel"
+                      placeholder="+91 9876543210"
+                      value={formData.ownerPhone}
+                      onChange={(e) => setFormData({ ...formData, ownerPhone: e.target.value })}
+                    />
+                  </div>
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="ownerWhatsapp">WhatsApp Number</Label>
+                  <Input
+                    id="ownerWhatsapp"
+                    type="tel"
+                    placeholder="+91 9876543210"
+                    value={formData.ownerWhatsapp}
+                    onChange={(e) => setFormData({ ...formData, ownerWhatsapp: e.target.value })}
+                  />
+                </div>
+              </div>
+
+              {/* Room Images Upload */}
+              <div className="space-y-4 pt-4 border-t border-border">
+                <h3 className="text-lg font-semibold">Room Photos</h3>
+                <ImageUpload images={images} onImagesChange={setImages} maxImages={10} />
               </div>
 
               {/* Submit Button */}
